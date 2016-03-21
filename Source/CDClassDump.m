@@ -46,27 +46,27 @@ NSString *CDErrorKey_Exception    = @"CDErrorKey_Exception";
 @implementation CDClassDump
 {
     CDSearchPathState *_searchPathState;
-    
+
     BOOL _shouldProcessRecursively;
     BOOL _shouldSortClasses; // And categories, protocols
     BOOL _shouldSortClassesByInheritance; // And categories, protocols
     BOOL _shouldSortMethods;
-    
+
     BOOL _shouldShowIvarOffsets;
     BOOL _shouldShowMethodAddresses;
     BOOL _shouldShowHeader;
     BOOL _shouldOnlyAnalyze;
     BOOL _shouldOnlyObfuscate;
-    
+
     NSRegularExpression *_regularExpression;
-    
+
     NSString *_sdkRoot;
     NSMutableArray *_machOFiles;
     NSMutableDictionary *_machOFilesByName;
     NSMutableArray *_objcProcessors;
-    
+
     CDTypeController *_typeController;
-    
+
     CDArch _targetArch;
 }
 
@@ -75,17 +75,17 @@ NSString *CDErrorKey_Exception    = @"CDErrorKey_Exception";
     if ((self = [super init])) {
         _searchPathState = [[CDSearchPathState alloc] init];
         _sdkRoot = nil;
-        
+
         _machOFiles = [[NSMutableArray alloc] init];
         _machOFilesByName = [[NSMutableDictionary alloc] init];
         _objcProcessors = [[NSMutableArray alloc] init];
-        
+
         _typeController = [[CDTypeController alloc] initWithClassDump:self];
-        
+
         // These can be ppc, ppc7400, ppc64, i386, x86_64
         _targetArch.cputype = CPU_TYPE_ANY;
         _targetArch.cpusubtype = 0;
-        
+
         _shouldShowHeader = YES;
 
         _maxRecursiveDepth = INT_MAX;
@@ -137,9 +137,7 @@ NSString *CDErrorKey_Exception    = @"CDErrorKey_Exception";
 }
 
 - (BOOL)loadFile:(CDFile *)file error:(NSError **)error depth:(int)depth {
-    //NSLog(@"targetArch: (%08x, %08x)", targetArch.cputype, targetArch.cpusubtype);
     CDMachOFile *machOFile = [file machOFileWithArch:_targetArch];
-    //NSLog(@"machOFile: %@", machOFile);
     if (machOFile == nil) {
         if (error != NULL) {
             NSString *failureReason;
@@ -176,7 +174,7 @@ NSString *CDErrorKey_Exception    = @"CDErrorKey_Exception";
                         [self.searchPathState pushSearchPaths:[machOFile runPaths]];
                         {
                             NSString *loaderPathPrefix = @"@loader_path";
-                            
+
                             NSString *path = [dylibCommand path];
                             if ([path hasPrefix:loaderPathPrefix]) {
                                 NSString *loaderPath = [machOFile.filename stringByDeletingLastPathComponent];
@@ -240,22 +238,23 @@ NSString *CDErrorKey_Exception    = @"CDErrorKey_Exception";
     NSString *executablePathPrefix = @"@executable_path";
     NSString *rpathPrefix = @"@rpath";
 
+    NSFileManager * fileManager = [NSFileManager defaultManager];
+
     if ([name hasPrefix:executablePathPrefix]) {
-        adjustedName = [name stringByReplacingOccurrencesOfString:executablePathPrefix withString:self.searchPathState.executablePath];
+        adjustedName = [name stringByReplacingOccurrencesOfString:executablePathPrefix
+                                                       withString:self.searchPathState.executablePath];
     } else if ([name hasPrefix:rpathPrefix]) {
-        //NSLog(@"Searching for %@ through run paths: %@", name, [searchPathState searchPaths]);
-        for (NSString *searchPath in [self.searchPathState searchPaths]) {
-            NSString *str = [name stringByReplacingOccurrencesOfString:rpathPrefix withString:searchPath];
-            //NSLog(@"trying %@", str);
-            if ([[NSFileManager defaultManager] fileExistsAtPath:str]) {
+        for (NSString * searchPath in [self.searchPathState searchPaths]) {
+            NSString * str = [name stringByReplacingOccurrencesOfString:rpathPrefix
+                                                             withString:searchPath];
+            if ([fileManager fileExistsAtPath:str]) {
                 adjustedName = str;
-                //NSLog(@"Found it!");
                 break;
             }
         }
+
         if (adjustedName == nil) {
             adjustedName = name;
-            //NSLog(@"Did not find it.");
         }
     } else if (self.sdkRoot != nil) {
         adjustedName = [self.sdkRoot stringByAppendingPathComponent:name];
@@ -263,9 +262,25 @@ NSString *CDErrorKey_Exception    = @"CDErrorKey_Exception";
         adjustedName = name;
     }
 
+    BOOL fileIsStub = NO;
+    if (![fileManager fileExistsAtPath:adjustedName]) {
+        NSString * stubFile = adjustedName;
+        if ([adjustedName hasSuffix:@".dylib"]) {
+            stubFile = [stubFile stringByDeletingPathExtension];
+        }
+        stubFile = [stubFile stringByAppendingPathExtension:@"tbd"];
+
+        if ([fileManager fileExistsAtPath:stubFile]) {
+            fileIsStub = YES;
+            adjustedName = stubFile;
+        }
+    }
+
     CDMachOFile *machOFile = _machOFilesByName[adjustedName];
     if (machOFile == nil) {
-        CDFile *file = [CDFile fileWithContentsOfFile:adjustedName searchPathState:self.searchPathState];
+        CDFile * file = [CDFile fileWithContentsOfFile:adjustedName
+                                       searchPathState:self.searchPathState
+                                           isAStubFile:fileIsStub];
 
         if (file == nil) {
             NSLog(@"Warning: Unable to read file: %@", adjustedName);

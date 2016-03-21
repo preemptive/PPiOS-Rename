@@ -9,6 +9,7 @@
 #import "CDFatFile.h"
 #import "CDMachOFile.h"
 #import "CDSearchPathState.h"
+#import "CDStubFile.h"
 
 NSString *CDImportNameForPath(NSString *path)
 {
@@ -119,13 +120,31 @@ BOOL CDArchUses64BitLibraries(CDArch arch)
 }
 
 // Returns CDFatFile or CDMachOFile
-+ (id)fileWithContentsOfFile:(NSString *)filename searchPathState:(CDSearchPathState *)searchPathState;
++ (id)fileWithContentsOfFile:(NSString *)filename
+             searchPathState:(CDSearchPathState *)searchPathState
+                 isAStubFile:(BOOL)isAStubFile
 {
-    NSData *data = [NSData dataWithContentsOfMappedFile:filename];
-    CDFatFile *fatFile = [[CDFatFile alloc] initWithData:data filename:filename searchPathState:searchPathState];
-    if (fatFile != nil)
+    NSError * error = nil;
+    NSData * data = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:filename]
+                                          options:NSDataReadingMappedIfSafe
+                                            error:&error];
+    if (error != nil) {
+        NSLog(@"Warning: unable to open file %@", filename);
+        return nil;
+    }
+
+    if (isAStubFile) {
+        return [[CDStubFile alloc] initWithData:data fromPath:filename];
+    }
+
+    // try to load as a fat binary
+    CDFatFile *fatFile = [[CDFatFile alloc] initWithData:data
+                                                filename:filename
+                                         searchPathState:searchPathState];
+    if (fatFile != nil) {
         return fatFile;
-    
+    }
+
     CDMachOFile *machOFile = [[CDMachOFile alloc] initWithData:data filename:filename searchPathState:searchPathState];
     return machOFile;
 }

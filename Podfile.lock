@@ -1,10 +1,16 @@
 PODS:
-  - Kiwi (2.3.0)
+  - Kiwi (2.4.0)
+  - LibYAML (0.1.4)
+  - YAML-Framework (0.0.2):
+    - LibYAML (~> 0.1.4)
 
 DEPENDENCIES:
   - Kiwi
+  - YAML-Framework
 
 SPEC CHECKSUMS:
-  Kiwi: 4c3988bd551f80f6ca0009f302f7c1a2e3777bf2
+  Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
+  LibYAML: 3af2c5adf3a40dff936d087aa6a77edc10036bc5
+  YAML-Framework: 6fe698e19d39d778829f5937e39d1e6bc12afd7b
 
 COCOAPODS: 0.39.0

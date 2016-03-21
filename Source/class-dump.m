@@ -369,7 +369,7 @@ int main(int argc, char *argv[])
                 } else {
                     CDSearchPathState *searchPathState = [[CDSearchPathState alloc] init];
                     searchPathState.executablePath = executablePath;
-                    id macho = [CDFile fileWithContentsOfFile:executablePath searchPathState:searchPathState];
+                    id macho = [CDFile fileWithContentsOfFile:executablePath searchPathState:searchPathState isAStubFile:NO];
                     if (macho == nil) {
                         printf("none\n");
                     } else {
@@ -387,7 +387,7 @@ int main(int argc, char *argv[])
                 }
 
                 classDump.searchPathState.executablePath = [executablePath stringByDeletingLastPathComponent];
-                CDFile *file = [CDFile fileWithContentsOfFile:executablePath searchPathState:classDump.searchPathState];
+                CDFile *file = [CDFile fileWithContentsOfFile:executablePath searchPathState:classDump.searchPathState isAStubFile:NO];
                 if (file == nil) {
                     NSFileManager *defaultManager = [NSFileManager defaultManager];
 
