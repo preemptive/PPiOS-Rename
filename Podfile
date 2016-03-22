@@ -1,7 +1,5 @@
 platform :osx, '10.8'
 
-use_frameworks!
-
 pod 'YAML-Framework'
 
 target 'ios-class-guard' do

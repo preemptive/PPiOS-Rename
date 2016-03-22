@@ -127,6 +127,15 @@ static NSString *const lettersSet[maxLettersSet] = {
     NSLog(@"I-vars = %zd", _ivarNames.count);
     NSLog(@"Forbidden keywords = %zd", _forbiddenNames.count);
 
+    NSMutableString * stringBuilder = [NSMutableString new];
+    for (NSString * symbol in _forbiddenNames) {
+        [stringBuilder appendFormat:@"%@\n", symbol];
+    }
+    [stringBuilder writeToFile:@"forbidden-symbols.list"
+                    atomically:TRUE
+                      encoding:NSUTF8StringEncoding
+                         error:nil];
+
     _resultString = [NSMutableString new];
 
     NSArray *propertyNames = [_propertyNames.allObjects sortedArrayUsingComparator:^NSComparisonResult(NSString *n1, NSString *n2) {
@@ -173,7 +182,6 @@ static NSString *const lettersSet[maxLettersSet] = {
     }
     [_resultString appendFormat:@"\r\n"];
 
-    //todo don't generate resultString unnecessarily when adding in the --obfuscate phase support
     if(self.symbolsFilePath != NULL){
         NSData *data = [_resultString dataUsingEncoding:NSUTF8StringEncoding];
         [data writeToFile:self.symbolsFilePath atomically:YES];
