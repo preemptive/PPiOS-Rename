@@ -1,4 +1,4 @@
-#Copyright 2016 PreEmptive Solutions, LLC
+#Copyright 2016-2017 PreEmptive Solutions, LLC
 #See LICENSE.txt for licensing information
 
 In order to regenerate the contents of this directory:
@@ -9,11 +9,11 @@ In order to regenerate the contents of this directory:
   ppios-rename --analyze -F '!BSClassO' build/Build/Products/Release-iphoneos/BoxSim.app
   ppios-rename --obfuscate-sources
 
-2. In Xcode, archive the project.
+2. In Xcode, archive the project (You may need to add signing credentials).
 3. Export to an .ipa, without rebuilding from bitcode.
 4. Deploy to a device via iTunes.
 5. Invoke a crash by tapping "Just Go" three times.
 6. In Xcode, review the crash logs on the device.
 7. Select the crash log, very quickly copy the unsymbolicated text with Command-A, Command-C, and paste this into 'unsymbolicated.crash'.
 8. Wait for Xcode to symbolicate the crash and copy that text to 'symbolicated.crash'.
-9. Copy the .dSYM from the archives (~/Library/Developer/Xcode/Archives/<date> ...).
+9. Copy the .dSYM from the archives (~/Library/Developer/Xcode/Archives/{Date}/BoxSim {Date}, {Time}.xcarchive/dSYMs/BoxSim.app.dSYM).
