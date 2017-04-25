@@ -307,11 +307,13 @@ static NSString *const lettersSet[maxLettersSet] = {
         //exclude all symbols in case what was obfuscated was a property
         NSSet* symbols = [NSSet setWithObjects:guard, [@"_" stringByAppendingString:guard], [@"set" stringByAppendingString:guard], nil];
 
+#if 0
         if([self checkForExistingSymbols:symbols]) {
             //contains guard string.. (in case it's a name like setGuardName.. )
             fprintf(stderr, "Error: Analyzing an already obfuscated binary. This will result in an unobfuscated binary. Please see the documentation for details.\n");
             exit(9);
         }
+#endif
         _guardName = originalName;
         return guard;
     }
