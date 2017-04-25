@@ -2,6 +2,9 @@ xcuserdata
 *.xcarchive/
 .idea
 build
+*._*
+/test/results
+/test/sandbox
 
 #ignore cocoapod files
 Pods
