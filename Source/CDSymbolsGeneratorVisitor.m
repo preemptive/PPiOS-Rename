@@ -211,7 +211,8 @@ static NSString *const lettersSet[maxLettersSet] = {
     }
 
     NSLog(@"Done generating symbol table.");
-    NSLog(@"Generated unique symbols = %ld", _uniqueSymbols.count);
+    NSLog(@"Generated unique symbols (_uniqueSymbols.count) = %ld", _uniqueSymbols.count);
+    NSLog(@"Generated unique symbols ([_symbols count]) = %ld", [_symbols count]);
 }
 
 - (void)writeExcludesIfRequested {
@@ -350,6 +351,7 @@ static NSString *const lettersSet[maxLettersSet] = {
 }
 
 - (void)generateSimpleSymbols:(NSString *)symbolName {
+    NSLog(@"generate for generateSimpleSymbols: %@", symbolName);
     if ([self doesContainGeneratedSymbol:symbolName]) {
         return;
     }
@@ -432,6 +434,7 @@ static NSString *const lettersSet[maxLettersSet] = {
 }
 
 - (void)generateMethodSymbols:(NSString *)symbolName {
+    NSLog(@"generate for generateMethodSymbols: %@", symbolName);
     NSString *getterName = [self getterNameForMethodName:symbolName];
     NSString *setterName = [self setterNameForMethodName:symbolName];
 
@@ -494,11 +497,19 @@ static NSString *const lettersSet[maxLettersSet] = {
 }
 
 - (void)addGenerated:(NSString *)generatedSymbol forSymbol:(NSString *)symbol {
+    if (_symbols[symbol] != nil) {
+        NSLog(@"(duplicate)");
+    }
+
     [_uniqueSymbols addObject:generatedSymbol];
     _symbols[symbol] = generatedSymbol;
+
+    NSLog(@"from %@ to %@ (%ld, %ld)", symbol, generatedSymbol, _uniqueSymbols.count, [_symbols count]);
 }
 
 - (void)generatePropertySymbols:(NSString *)propertyName {
+    NSLog(@"generate for generatePropertySymbols: %@", propertyName);
+
     NSArray *symbols = [self symbolsForProperty:propertyName];
     BOOL shouldSymbolBeIgnored = NO;
     for (NSString *symbolName in symbols) {
@@ -536,6 +547,7 @@ static NSString *const lettersSet[maxLettersSet] = {
 }
 
 - (void)createNewSymbolsForProperty:(NSString *)propertyName {
+    NSLog(@"generate for createNewSymbolsForProperty: %@", propertyName);
     NSInteger symbolLength = propertyName.length;
 
     while (true) {
