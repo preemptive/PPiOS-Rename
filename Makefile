@@ -2,7 +2,7 @@
 # See LICENSE.txt for licensing information
 
 PROJECT_NAME=PPiOS-Rename
-NUMERIC_VERSION=1.5.0
+NUMERIC_VERSION=1.6.0
 VERSION=v$(NUMERIC_VERSION)
 PROGRAM_NAME=ppios-rename
 
