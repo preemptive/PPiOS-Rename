@@ -423,6 +423,12 @@
             objc2Method.name  = [cursor readPtr:small];
             objc2Method.types = [cursor readPtr:small];
             objc2Method.imp   = [cursor readPtr:small];
+            
+            if (small) {
+                objc2Method.name  = [self.machOFile addressForDataOffset:objc2Method.name];
+                objc2Method.types = [self.machOFile addressForDataOffset:objc2Method.types];
+            }
+            
             NSString *name    = [self.machOFile stringAtAddress:objc2Method.name];
             NSString *types   = [self.machOFile stringAtAddress:objc2Method.types];
             

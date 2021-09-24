@@ -38,10 +38,12 @@ extern NSString *CDSegmentEncryptionTypeName(CDSegmentEncryptionType type);
 - (NSString *)flagDescription;
 
 - (BOOL)containsAddress:(NSUInteger)address;
+- (BOOL)containsOffset:(NSUInteger)address;
 - (CDSection *)sectionContainingAddress:(NSUInteger)address;
 - (CDSection *)sectionWithName:(NSString *)name;
 - (NSUInteger)fileOffsetForAddress:(NSUInteger)address;
 - (NSUInteger)segmentOffsetForAddress:(NSUInteger)address;
+- (NSUInteger)addressForDataOffset:(NSUInteger)offset;
 
 - (void)writeSectionData;
 
