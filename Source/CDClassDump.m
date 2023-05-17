@@ -229,7 +229,40 @@ static NSDictionary<NSValue *, NSArray<NSValue *> *> *supportedArches = nil;
                             if ([path hasPrefix:loaderPathPrefix]) {
                                 NSString *loaderPath = [machOFile.filename stringByDeletingLastPathComponent];
                                 path = [[path stringByReplacingOccurrencesOfString:loaderPathPrefix withString:loaderPath] stringByStandardizingPath];
+                                
+                            } else {
+                                
+                                // First of all, God bless me for fixing this stupid issue and hopefully, the owner of this repo will fix the problem fundamentally 🚀 🎉
+                                // Fixing issue#39 : https://github.com/preemptive/PPiOS-Rename/issues/39 🪲
+                                // Why do we need to do these f...g workaround? 🦧
+                                // because It's so common for Apple to ruin our life 😩
+                                // Many things have been changed on the DYLIB files in the new releases so we need to use the old files 🤷🏻‍♂️
+                                // Thanks to the @BillBai that who motivated me to debug this issue with the following response🫡:
+    
+                                /*
+                                This is because the iOS SDK's frameworks binaries from newer version of Xcode are using chained fixups and export trie Mach-O load commands to encode bind/rebase and symbol info. Not the dyld info in the older version. And the ppios-rename does not support these load commands yet.
+
+                                A quick fix is just download the older version of Xcode (https://xcodereleases.com) ,and use the older version sdk by passing the "--sdk-root" argument.
+                                
+                                */
+                                
+                                
+                                // I've added old files to a bundle and read them for this particular DYLIB file. 🥳
+                                // We received the error "Unknown load command: 0x80000033" because of these 3 dylibs files even though we passed the old Xcode path as --sdk-root params in our command.
+                                //You might need to add more dylibs files depending on your project requirements. ( You still need to pass the iPhoneOS.sdk path from the old Xcode (e.g 11-12)
+                                
+                                if ([path containsString:@"/usr/lib/system/libsystem_kernel.dylib"]) {
+                                    path = [self getFilePathForPPiOSBundle:@"libsystem_kernel.dylib"];
+                                } else if ([path isEqualToString:@"/usr/lib/system/libsystem_platform.dylib"]) {
+                                    path = [self getFilePathForPPiOSBundle:@"libsystem_platform.dylib"];
+                                } else if ([path isEqualToString:@"/usr/lib/system/libsystem_pthread.dylib"]) {
+                                    path = [self getFilePathForPPiOSBundle:@"libsystem_pthread.dylib"];
+                                }
                             }
+                            
+                            // My $1 tip to you guys:  you can find what libraries causing "Unknown load command: 0x80000033" by uncommenting the next line and find it in the terminal windows
+                            
+                            // NSLog(@"MoLowKey-Debug : %@ \n",path);
                             [self machOFileWithName:path andDepth:depth+1]; // Loads as a side effect
                         }
                         [self.searchPathState popSearchPaths];
@@ -484,6 +517,22 @@ static NSDictionary<NSValue *, NSArray<NSValue *> *> *supportedArches = nil;
     }
 
     return 0;
+}
+
+#pragma mark - dylibsHelper
+
+-(NSString*)getFilePathForPPiOSBundle:(NSString*)dylibName {
+    
+    NSString *  dylibsPath = [[NSBundle mainBundle] pathForResource:@"ppiOSBundle" ofType:@"bundle"];
+    if (dylibsPath) {
+        NSBundle * ppiOSBundle =  [NSBundle bundleWithPath:dylibsPath];
+        if (ppiOSBundle) {
+           NSString * path = [[ppiOSBundle resourcePath] stringByAppendingPathComponent:dylibName];
+            return path;
+        }
+    }
+    return nil;
+    
 }
 
 @end

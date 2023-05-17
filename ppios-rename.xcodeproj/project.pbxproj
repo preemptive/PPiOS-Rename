@@ -135,6 +135,12 @@
 		95E3D8AE1C89F37800CF28E2 /* class-dump.m in Sources */ = {isa = PBXBuildFile; fileRef = 95E3D8AD1C89F37800CF28E2 /* class-dump.m */; };
 		C270B5C616C54AD6006CA75D /* ULEB128.m in Sources */ = {isa = PBXBuildFile; fileRef = C270B5C516C54AD5006CA75D /* ULEB128.m */; };
 		C270B5C816C54B0C006CA75D /* ULEB128.h in Headers */ = {isa = PBXBuildFile; fileRef = C270B5C716C54B0A006CA75D /* ULEB128.h */; };
+		CD6ACDAF2A1576FA0040CAC0 /* libsystem_kernel.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6ACDAC2A1576FA0040CAC0 /* libsystem_kernel.dylib */; };
+		CD6ACDB02A1576FA0040CAC0 /* libsystem_platform.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6ACDAD2A1576FA0040CAC0 /* libsystem_platform.dylib */; };
+		CD6ACDB12A1576FA0040CAC0 /* libsystem_pthread.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6ACDAE2A1576FA0040CAC0 /* libsystem_pthread.dylib */; };
+		CD6ACDB42A15771F0040CAC0 /* libsystem_kernel.dylib in Resources */ = {isa = PBXBuildFile; fileRef = CD6ACDAC2A1576FA0040CAC0 /* libsystem_kernel.dylib */; };
+		CD6ACDB52A15771F0040CAC0 /* libsystem_platform.dylib in Resources */ = {isa = PBXBuildFile; fileRef = CD6ACDAD2A1576FA0040CAC0 /* libsystem_platform.dylib */; };
+		CD6ACDB62A15771F0040CAC0 /* libsystem_pthread.dylib in Resources */ = {isa = PBXBuildFile; fileRef = CD6ACDAE2A1576FA0040CAC0 /* libsystem_pthread.dylib */; };
 		DA7533B213AA587A003BE32C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01EB826313A590D9003EDE60 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -145,6 +151,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 013D1F1013A5AE5A00BF0A67;
 			remoteInfo = MachObjC;
+		};
+		CD6ACDB22A15770A0040CAC0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01EB825613A590D9003EDE60 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD6ACDA62A1576A00040CAC0;
+			remoteInfo = PPiOSBundle;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -375,6 +388,10 @@
 		95E3D8AD1C89F37800CF28E2 /* class-dump.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "class-dump.m"; path = "Source/class-dump.m"; sourceTree = "<group>"; };
 		C270B5C516C54AD5006CA75D /* ULEB128.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ULEB128.m; path = Source/ULEB128.m; sourceTree = "<group>"; };
 		C270B5C716C54B0A006CA75D /* ULEB128.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ULEB128.h; path = Source/ULEB128.h; sourceTree = "<group>"; };
+		CD6ACDA72A1576A00040CAC0 /* PPiOSBundle.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PPiOSBundle.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD6ACDAC2A1576FA0040CAC0 /* libsystem_kernel.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libsystem_kernel.dylib; sourceTree = "<group>"; };
+		CD6ACDAD2A1576FA0040CAC0 /* libsystem_platform.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libsystem_platform.dylib; sourceTree = "<group>"; };
+		CD6ACDAE2A1576FA0040CAC0 /* libsystem_pthread.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libsystem_pthread.dylib; sourceTree = "<group>"; };
 		F7D447FFEF466980B4EED9EE /* Pods-UnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -404,6 +421,16 @@
 			files = (
 				013D1F5A13A5AF6500BF0A67 /* libMachObjC.a in Frameworks */,
 				01EB826413A590D9003EDE60 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD6ACDA42A1576A00040CAC0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD6ACDB12A1576FA0040CAC0 /* libsystem_pthread.dylib in Frameworks */,
+				CD6ACDB02A1576FA0040CAC0 /* libsystem_platform.dylib in Frameworks */,
+				CD6ACDAF2A1576FA0040CAC0 /* libsystem_kernel.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -521,6 +548,7 @@
 				01EB826513A590D9003EDE60 /* class-dump */,
 				013D1EFE13A5A0F100BF0A67 /* deprotect */,
 				0165B8B41827137D00CC647F /* UnitTests */,
+				CD6ACDAB2A1576E50040CAC0 /* Resources */,
 				01EB826213A590D9003EDE60 /* Frameworks */,
 				01EB826013A590D9003EDE60 /* Products */,
 				38653105C3AD1ECFFF532A50 /* ppios-rename Spec */,
@@ -536,6 +564,7 @@
 				01EB825F13A590D9003EDE60 /* ppios-rename */,
 				013D1F1113A5AE5A00BF0A67 /* libMachObjC.a */,
 				0165B8B11827137D00CC647F /* UnitTests.xctest */,
+				CD6ACDA72A1576A00040CAC0 /* PPiOSBundle.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -831,6 +860,16 @@
 			path = lib;
 			sourceTree = "<group>";
 		};
+		CD6ACDAB2A1576E50040CAC0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CD6ACDAC2A1576FA0040CAC0 /* libsystem_kernel.dylib */,
+				CD6ACDAD2A1576FA0040CAC0 /* libsystem_platform.dylib */,
+				CD6ACDAE2A1576FA0040CAC0 /* libsystem_pthread.dylib */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		EB20856B1CAFC4E2CAF0CA43 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -916,12 +955,30 @@
 			buildRules = (
 			);
 			dependencies = (
+				CD6ACDB32A15770A0040CAC0 /* PBXTargetDependency */,
 				0158A8161412DED0003FEB91 /* PBXTargetDependency */,
 			);
 			name = "ppios-rename";
 			productName = "class-dump";
 			productReference = 01EB825F13A590D9003EDE60 /* ppios-rename */;
 			productType = "com.apple.product-type.tool";
+		};
+		CD6ACDA62A1576A00040CAC0 /* PPiOSBundle */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD6ACDAA2A1576A00040CAC0 /* Build configuration list for PBXNativeTarget "PPiOSBundle" */;
+			buildPhases = (
+				CD6ACDA32A1576A00040CAC0 /* Sources */,
+				CD6ACDA42A1576A00040CAC0 /* Frameworks */,
+				CD6ACDA52A1576A00040CAC0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PPiOSBundle;
+			productName = PPiOSBundle;
+			productReference = CD6ACDA72A1576A00040CAC0 /* PPiOSBundle.bundle */;
+			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
 
@@ -934,6 +991,11 @@
 					0165B8B01827137D00CC647F = {
 						TestTargetID = 01EB825E13A590D9003EDE60;
 					};
+					CD6ACDA62A1576A00040CAC0 = {
+						CreatedOnToolsVersion = 14.2;
+						DevelopmentTeam = QQAR8U96PN;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 01EB825913A590D9003EDE60 /* Build configuration list for PBXProject "ppios-rename" */;
@@ -941,6 +1003,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 01EB825413A590D9003EDE60;
@@ -951,6 +1014,7 @@
 				013D1F1013A5AE5A00BF0A67 /* MachObjC */,
 				01EB825E13A590D9003EDE60 /* ppios-rename */,
 				0165B8B01827137D00CC647F /* UnitTests */,
+				CD6ACDA62A1576A00040CAC0 /* PPiOSBundle */,
 			);
 		};
 /* End PBXProject section */
@@ -965,6 +1029,16 @@
 				38653247D923811967368147 /* CustomCellTableViewCell_xib.txt in Resources */,
 				38653A25F5998C54C612637D /* contents in Resources */,
 				38653BDE31667E0577C95CA8 /* podsProject.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD6ACDA52A1576A00040CAC0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD6ACDB42A15771F0040CAC0 /* libsystem_kernel.dylib in Resources */,
+				CD6ACDB52A15771F0040CAC0 /* libsystem_platform.dylib in Resources */,
+				CD6ACDB62A15771F0040CAC0 /* libsystem_pthread.dylib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1113,6 +1187,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD6ACDA32A1576A00040CAC0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1120,6 +1201,11 @@
 			isa = PBXTargetDependency;
 			target = 013D1F1013A5AE5A00BF0A67 /* MachObjC */;
 			targetProxy = 0158A8151412DED0003FEB91 /* PBXContainerItemProxy */;
+		};
+		CD6ACDB32A15770A0040CAC0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CD6ACDA62A1576A00040CAC0 /* PPiOSBundle */;
+			targetProxy = CD6ACDB22A15770A0040CAC0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1404,6 +1490,113 @@
 			};
 			name = Release;
 		};
+		CD6ACDA82A1576A00040CAC0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = QQAR8U96PN;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPrincipalClass = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Resources",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.1;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.secureauth.PPiOSBundle;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		CD6ACDA92A1576A00040CAC0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QQAR8U96PN;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPrincipalClass = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Resources",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.1;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.secureauth.PPiOSBundle;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1439,6 +1632,15 @@
 			buildConfigurations = (
 				01EB826F13A590D9003EDE60 /* Debug */,
 				01EB827013A590D9003EDE60 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CD6ACDAA2A1576A00040CAC0 /* Build configuration list for PBXNativeTarget "PPiOSBundle" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD6ACDA82A1576A00040CAC0 /* Debug */,
+				CD6ACDA92A1576A00040CAC0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
