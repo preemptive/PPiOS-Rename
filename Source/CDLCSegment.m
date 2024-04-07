@@ -90,6 +90,11 @@ NSString *CDSegmentEncryptionTypeName(CDSegmentEncryptionType type)
     return _segmentCommand.vmaddr;
 }
 
+- (NSUInteger)vmsize;
+{
+    return _segmentCommand.vmsize;
+}
+
 - (NSUInteger)fileoff;
 {
     return _segmentCommand.fileoff;
@@ -169,6 +174,11 @@ NSString *CDSegmentEncryptionTypeName(CDSegmentEncryptionType type)
     return (address >= _segmentCommand.vmaddr) && (address < _segmentCommand.vmaddr + _segmentCommand.vmsize);
 }
 
+- (BOOL)containsOffset:(NSUInteger)address
+{
+    return (address >= _segmentCommand.fileoff) && (address < _segmentCommand.fileoff + _segmentCommand.filesize);
+}
+
 - (CDSection *)sectionContainingAddress:(NSUInteger)address;
 {
     for (CDSection *section in self.sections) {
@@ -192,6 +202,11 @@ NSString *CDSegmentEncryptionTypeName(CDSegmentEncryptionType type)
 - (NSUInteger)fileOffsetForAddress:(NSUInteger)address;
 {
     return [[self sectionContainingAddress:address] fileOffsetForAddress:address];
+}
+
+- (NSUInteger)addressForDataOffset:(NSUInteger)offset
+{
+    return self.vmaddr + (offset - self.fileoff);
 }
 
 - (NSUInteger)segmentOffsetForAddress:(NSUInteger)address;

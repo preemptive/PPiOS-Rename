@@ -319,6 +319,17 @@ static NSString *CDMachOFileMagicNumberDescription(uint32_t magic)
     return nil;
 }
 
+- (CDLCSegment *)segmentContainingOffset:(NSUInteger)offset;
+{
+    for (id loadCommand in _loadCommands) {
+        if ([loadCommand isKindOfClass:[CDLCSegment class]] && [loadCommand containsOffset:offset]) {
+            return loadCommand;
+        }
+    }
+
+    return nil;
+}
+
 - (void)showWarning:(NSString *)warning;
 {
     NSLog(@"Warning: %@", warning);
@@ -356,7 +367,8 @@ static NSString *CDMachOFileMagicNumberDescription(uint32_t magic)
     CDSection *section = [segment sectionContainingAddress:address];
     if ([[section sectionName] isEqualToString:@"__objc_selrefs"]) {
         const void * reference = [self.data bytes] + offset;
-        offset = ([self ptrSize] == 8) ? *((uint64_t *)reference) : *((uint32_t *)reference);
+        NSUInteger vmaddr = ([self ptrSize] == 8) ? *((uint64_t *)reference) : *((uint32_t *)reference);
+        offset = [self dataOffsetForAddress:vmaddr];
     }
 
     ptr = (uint8_t *)[self.data bytes] + offset;
@@ -381,6 +393,25 @@ static NSString *CDMachOFileMagicNumberDescription(uint32_t magic)
     }
 
     return [segment fileOffsetForAddress:address];
+}
+
+- (NSUInteger)addressForDataOffset:(NSUInteger)offset
+{
+    if (offset == 0)
+        return 0;
+
+    CDLCSegment *segment = [self segmentContainingOffset:offset];
+    if (segment == nil) {
+        NSLog(@"Error: Cannot find segment for data offset 0x%08lx in segmentContainingOffset:", offset);
+        exit(5);
+    }
+
+    if ([segment isProtected]) {
+        NSLog(@"Error: Segment is protected.");
+        exit(5);
+    }
+
+    return [segment addressForDataOffset:offset];
 }
 
 - (const void *)bytes;
